@@ -155,9 +155,10 @@ namespace ProReLe.Presentation
             var menuText = 
                 "ProReLe (Product, Registration and Sale) > PRODUCT MENU > GET" + Environment.NewLine + 
                 "[1] - Get By Description." + Environment.NewLine +
-                "[2] - Get Ordered By Price." + Environment.NewLine +
-                "[3] - Get Ordered By Amount." + Environment.NewLine +
-                "[4] - Return." + Environment.NewLine;
+                "[2] - Get All." + Environment.NewLine +
+                "[3] - Get All Ordered By Price." + Environment.NewLine +
+                "[4] - Get All Ordered By Amount." + Environment.NewLine +
+                "[5] - Return." + Environment.NewLine;
 
             Console.WriteLine(menuText);
             int menuOption = ReadChoiceNumber(4);
@@ -172,17 +173,22 @@ namespace ProReLe.Presentation
                     WriteProductList(productsByDescription);
                     Console.Read();
                     break;
-                case 2:
+                  case 2:
+                    var products = _productQuery.GetAll();
+                    WriteProductList(products);
+                    Console.Read();
+                    break;
+                case 3:
                     var productsByPrice = _productQuery.GetAllOrderedByPrice();
                     WriteProductList(productsByPrice);
                     Console.Read();
                     break;
-                case 3:
+                case 4:
                     var productsByAmount = _productQuery.GetAllOrderedByAmount();
                     WriteProductList(productsByAmount);
                     Console.Read();
                     break;
-                case 4:
+                case 5:
                     break;
             }
         }
