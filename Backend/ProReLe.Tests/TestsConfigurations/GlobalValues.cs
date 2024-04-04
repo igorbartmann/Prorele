@@ -14,7 +14,13 @@ namespace ProReLe.Tests
         public const int PRODUCT_AMOUNT_AFTER_EDIT = 8;
 
         // Client.
+        public const string CLIENT_NAME_BEFORE_EDIT = "MUSTERMAN01";
+        public const string CLIENT_NAME_AFTER_EDIT = "MUSTERMAN02";
+        public const string CLIENT_CPF_BEFORE_EDIT = "045.987.450-82";
+        public const string CLIENT_CPF_AFTER_EDIT = "045.987.450-84";
+
 
         // Sale.
+
     }
 }

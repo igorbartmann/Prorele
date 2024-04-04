@@ -30,49 +30,170 @@ namespace ProReLe.Tests
         [Fact, Order(0)]
         public void PrepareDatabase()
         {
-            throw new NotImplementedException("Test case not implemented!");
+            var clientsCreated = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_BEFORE_EDIT);
+            var clientsEdited = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_AFTER_EDIT);
+            var clients = clientsCreated.Concat(clientsEdited);
+
+            foreach (var client in clients)
+            {
+                var response = _clientService.Delete(client);
+                if (!response.Success)
+                {
+                    Assert.Fail("Unable to clean the database!");
+                }
+            }
         }
 
         [Fact, Order(1)]
         public void IncludeClient()
         {
-            throw new NotImplementedException("Test case not implemented!");
+            // Arrange: variables declarations and initilizations.
+            var client = new Client(
+                    GlobalValues.CLIENT_NAME_BEFORE_EDIT,
+                    GlobalValues.CLIENT_CPF_BEFORE_EDIT);
+
+            // Act: call to the method to be tested.
+            var response = _clientService.Include(client);
+
+            // Assert: result validation
+            Assert.True(response.Success, "The operation does not return a success status.");
         }
 
         [Fact, Order(2)]
         public void EditClient()
         {
-            throw new NotImplementedException("Test case not implemented!");
+        // Arrange: variables declarations and initilizations.
+        var clientsByName = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_BEFORE_EDIT);
+
+            var client = clientsByName.
+                FirstOrDefault(c =>
+                c.Name == GlobalValues.CLIENT_NAME_BEFORE_EDIT
+                && c.Cpf == GlobalValues.CLIENT_CPF_BEFORE_EDIT);
+
+            if (client is null) {
+                Assert.Fail("Client not found!");
+            }
+
+            // Act: call to the method to be tested.
+            client.Name = GlobalValues.CLIENT_NAME_AFTER_EDIT;
+            client.Cpf = GlobalValues.CLIENT_CPF_AFTER_EDIT;
+
+
+            var response = _clientService.Update(client);
+
+            // Assert: result validation
+            Assert.True(response.Success, "The operation does not return a success status.");
+
         }
 
         [Fact, Order(3)]
         public void DeleteClient()
         {
-            throw new NotImplementedException("Test case not implemented!");
+            // Arrange: variables declarations and initilizations.
+            var clientsByName = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_AFTER_EDIT);
+            var client = clientsByName
+                .FirstOrDefault(c =>
+                    c.Name == GlobalValues.CLIENT_NAME_AFTER_EDIT
+                    && c.Cpf == GlobalValues.CLIENT_CPF_AFTER_EDIT);
+
+            if (client is null)
+            {
+                Assert.Fail("Client not found!");
+            }
+
+            // Act: call to the method to be tested.
+            var response = _clientService.Delete(client);
+
+            // Assert: result validation
+            Assert.True(response.Success, "The operation does not return a success status.");
         }
 
         [Fact, Order(4)]
         public void GetClientById()
         {
-            throw new NotImplementedException("Test case not implemented!");
+            // Arrange: variables declarations and initilizations.
+            var clients = _clientQuere.GetAll();
+
+            var clientIndex = clients.Count() / 2;
+            var client = clients.ElementAt(clientIndex);
+
+            // Act: call to the method to be tested.
+            var clientById = _clientQuere.GetById(client.Id);
+
+            if (clientById is null)
+            {
+                Assert.Fail("The client was not found!");
+            }
+
+            // Assert: result validation
+            var clientsAreTheSame =
+                client.Id == clientById.Id
+                && client.Name == clientById.Name
+                && client.Cpf == clientById.Cpf;
+
+            Assert.True(clientsAreTheSame, "The client found is not the same of the query filter.");
         }
 
         [Fact, Order(5)]
         public void GetClientByCpf()
         {
-            throw new NotImplementedException("Test case not implemented!");
+            // Arrange: variables declarations and initilizations.
+            var clients = _clientQuere.GetAll();
+
+            var clientIndex = clients.Count() / 2;
+            var client = clients.ElementAt(clientIndex);
+
+            // Act: call to the method to be tested.
+            var clientByCpf = _clientQuere.GetByCpf(client.Cpf);
+
+            if (clientByCpf is null)
+            {
+                Assert.Fail("The client was not found!");
+            }
+
+            // Assert: result validation
+            var clientsAreTheSame =
+                client.Id == clientByCpf.Id
+                && client.Name == clientByCpf.Name
+                && client.Cpf == clientByCpf.Cpf;
+
+            Assert.True(clientsAreTheSame, "The client found is not the same of the query filter.");
         }
 
         [Fact, Order(6)]
         public void GetClientsByName()
         {
-            throw new NotImplementedException("Test case not implemented!");
+            // Arrange: variables declarations and initilizations.
+            var clients = _clientQuere.GetAll();
+
+            var clientIndex = clients.Count() / 2;
+            var client = clients.ElementAt(clientIndex);
+
+            // Act: call to the method to be tested.
+            var clientsByName = _clientQuere.GetByName(client.Name);
+
+            if (!clientsByName.Any())
+            {
+                Assert.Fail("The client was not found!");
+            }
+
+            // Assert: result validation
+            var clientsAreInTheList = clientsByName
+                .Any(c => c.Id == client.Id
+                    && c.Name == client.Name
+                    && c.Cpf == client.Cpf);
+
+            Assert.True(clientsAreInTheList, "The client is not in the list.");
         }
 
         [Fact, Order(8)]
         public void GetAllClients()
-        {            
-            throw new NotImplementedException("Test case not implemented!");
+        {
+            // Act: call to the method to be tested.
+            var clients = _clientQuere.GetAll();
+
+            // Assert: result validation
+            Assert.True(clients.Any(), "There are no products in the list.");
         }
     }
 }
