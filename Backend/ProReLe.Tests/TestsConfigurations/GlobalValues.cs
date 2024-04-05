@@ -27,5 +27,6 @@ namespace ProReLe.Tests
         public const int SALE_AMOUNT = 2;
         public const decimal SALE_DISCONT_BEFORE_EDIT = 4.5M;
         public const decimal SALE_DISCOUNT_AFTER_EDIT = 10M;
+
     }
 }
