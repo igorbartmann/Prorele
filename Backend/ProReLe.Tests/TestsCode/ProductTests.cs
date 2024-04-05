@@ -49,9 +49,9 @@ namespace ProReLe.Tests
         {
             // Arrange: variables declarations and initilizations.
             var product = new Product(
-                    GlobalValues.PRODUCT_DESCRIPTION_BEFORE_EDIT, 
-                    GlobalValues.PRODUCT_PRICE_BEFORE_EDIT, 
-                    GlobalValues.PRODUCT_AMOUNT_BEFORE_EDIT);
+                GlobalValues.PRODUCT_DESCRIPTION_BEFORE_EDIT, 
+                GlobalValues.PRODUCT_PRICE_BEFORE_EDIT, 
+                GlobalValues.PRODUCT_AMOUNT_BEFORE_EDIT);
             
             // Act: call to the method to be tested.
             var response = _productService.Include(product);

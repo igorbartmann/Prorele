@@ -19,6 +19,5 @@ namespace ProReLe.Domain.Entities
         public string Name {get;set;}
         public string Cpf {get;set;}
         public bool LogicallyExcluded {get;set;}
-
     }
 }
