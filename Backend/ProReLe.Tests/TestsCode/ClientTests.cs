@@ -30,11 +30,9 @@ namespace ProReLe.Tests
         [Fact, Order(0)]
         public void PrepareDatabase()
         {
-            var clientsCreated = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_BEFORE_EDIT);
-            var clientsEdited = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_AFTER_EDIT);
-            var clients = clientsCreated.Concat(clientsEdited);
-
-            foreach (var client in clients)
+            var client = _clientQuere.GetByCpf(GlobalValues.CLIENT_CPF);
+            
+            if (client is not null)
             {
                 var response = _clientService.Delete(client);
                 if (!response.Success)
@@ -48,9 +46,7 @@ namespace ProReLe.Tests
         public void IncludeClient()
         {
             // Arrange: variables declarations and initilizations.
-            var client = new Client(
-                    GlobalValues.CLIENT_NAME_BEFORE_EDIT,
-                    GlobalValues.CLIENT_CPF_BEFORE_EDIT);
+            var client = new Client(GlobalValues.CLIENT_NAME_BEFORE_EDIT, GlobalValues.CLIENT_CPF);
 
             // Act: call to the method to be tested.
             var response = _clientService.Include(client);
@@ -62,13 +58,13 @@ namespace ProReLe.Tests
         [Fact, Order(2)]
         public void EditClient()
         {
-        // Arrange: variables declarations and initilizations.
-        var clientsByName = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_BEFORE_EDIT);
+            // Arrange: variables declarations and initilizations.
+            var clientsByName = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_BEFORE_EDIT);
 
-            var client = clientsByName.
-                FirstOrDefault(c =>
-                c.Name == GlobalValues.CLIENT_NAME_BEFORE_EDIT
-                && c.Cpf == GlobalValues.CLIENT_CPF_BEFORE_EDIT);
+            var client = clientsByName
+                .FirstOrDefault(c =>
+                    c.Name == GlobalValues.CLIENT_NAME_BEFORE_EDIT
+                    && c.Cpf == GlobalValues.CLIENT_CPF);
 
             if (client is null) {
                 Assert.Fail("Client not found!");
@@ -76,14 +72,11 @@ namespace ProReLe.Tests
 
             // Act: call to the method to be tested.
             client.Name = GlobalValues.CLIENT_NAME_AFTER_EDIT;
-            client.Cpf = GlobalValues.CLIENT_CPF_AFTER_EDIT;
-
 
             var response = _clientService.Update(client);
 
             // Assert: result validation
             Assert.True(response.Success, "The operation does not return a success status.");
-
         }
 
         [Fact, Order(3)]
@@ -91,10 +84,11 @@ namespace ProReLe.Tests
         {
             // Arrange: variables declarations and initilizations.
             var clientsByName = _clientQuere.GetByName(GlobalValues.CLIENT_NAME_AFTER_EDIT);
+
             var client = clientsByName
                 .FirstOrDefault(c =>
                     c.Name == GlobalValues.CLIENT_NAME_AFTER_EDIT
-                    && c.Cpf == GlobalValues.CLIENT_CPF_AFTER_EDIT);
+                    && c.Cpf == GlobalValues.CLIENT_CPF);
 
             if (client is null)
             {
@@ -179,14 +173,15 @@ namespace ProReLe.Tests
 
             // Assert: result validation
             var clientsAreInTheList = clientsByName
-                .Any(c => c.Id == client.Id
+                .Any(c => 
+                    c.Id == client.Id
                     && c.Name == client.Name
                     && c.Cpf == client.Cpf);
 
             Assert.True(clientsAreInTheList, "The client is not in the list.");
         }
 
-        [Fact, Order(8)]
+        [Fact, Order(7)]
         public void GetAllClients()
         {
             // Act: call to the method to be tested.
