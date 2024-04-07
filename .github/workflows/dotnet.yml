@@ -21,9 +21,8 @@ jobs:
       run: dotnet restore
       working-directory: Backend/ProReLe.Application
     - name: Build
-      run: dotnet build --no-restore -c Release
+      run: dotnet build --no-restore
       working-directory: Backend/ProReLe.Application
     - name: Test
-      #run: dotnet test --no-build -c Release --verbosity normal
-      run: cd Backend/ProReLe.Tests/bin/Release/net6.0; ls
+      run: dotnet test --no-build --verbosity normal
       working-directory: Backend/ProReLe.Tests
