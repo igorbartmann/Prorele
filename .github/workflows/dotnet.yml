@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: cd Backend/ProRele; ls
-      # working-directory: Backend/ProReLe/ProRele.sln
+      run: dotnet restore
+      working-directory: Backend/ProReLe.Application
     - name: Build
       run: dotnet build --no-restore
     - name: Test
