@@ -22,5 +22,6 @@ jobs:
       working-directory: Backend/ProReLe.Application
     - name: Build
       run: dotnet build --no-restore
+      working-directory: Backend/ProReLe.Application
     - name: Test
       run: dotnet test --no-build --verbosity normal
