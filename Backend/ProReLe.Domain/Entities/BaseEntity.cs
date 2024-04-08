@@ -15,6 +15,5 @@ namespace ProReLe.Domain.Entities
         }
 
         public int Id {get;set;}
-        
     }
 }
