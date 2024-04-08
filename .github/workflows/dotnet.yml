@@ -17,31 +17,13 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies (Domain)
-      run: dotnet restore
-      working-directory: Backend/ProReLe.Domain
-    - name: Restore dependencies (Data)
-      run: dotnet restore
-      working-directory: Backend/ProReLe.Data
-    - name: Restore dependencies (Application)
-      run: dotnet restore
-      working-directory: Backend/ProReLe.Application
-    - name: Restore dependencies (Presentation)
+    - name: Restore dependencies (App)
       run: dotnet restore
       working-directory: Backend/ProReLe.Presentation
     - name: Restore dependencies (Tests)
       run: dotnet restore
       working-directory: Backend/ProReLe.Tests
-    - name: Build (Domain)
-      run: dotnet build --no-restore
-      working-directory: Backend/ProReLe.Domain
-    - name: Build (Data)
-      run: dotnet build --no-restore
-      working-directory: Backend/ProReLe.Data
-    - name: Build (Application)
-      run: dotnet build --no-restore
-      working-directory: Backend/ProReLe.Application
-    - name: Build (Presentation)
+    - name: Build (App)
       run: dotnet build --no-restore
       working-directory: Backend/ProReLe.Presentation
     - name: Build (Tests)
